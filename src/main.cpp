@@ -26,13 +26,13 @@ const char *g_pszNotiInternetMMS = "Уважаемый абонент, наст�
 const char *g_pszNotiOpt = ". При установке настроек используйте PIN код 1234";
 
 const char *g_pszNotiPost = "Настройки доставлены. Сохраните их";
-const char *g_pszNotiPostOpt = ", затем перезагрузите Ваше устройство";
 
 const char *g_pszAPNInternet = "<?xml version=\"1.0\"?><!DOCTYPE wap-provisioningdoc PUBLIC \"-//WAPFORUM//DTD PROV 1.0//EN\" \"http://www.wapforum.org/DTD/prov.dtd\"><wap-provisioningdoc version=\"1.0\"><characteristic type=\"BOOTSTRAP\"><parm name=\"NAME\" value=\"Letai Internet\"/></characteristic><characteristic type=\"NAPDEF\"><parm name=\"NAPID\" value=\"NAP1\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"BEARER\" value=\"GSM-GPRS\"/><parm name=\"NAP-ADDRESS\" value=\"internet.letai.ru\"/><parm name=\"NAP-ADDRTYPE\" value=\"APN\"/></characteristic><characteristic type=\"APPLICATION\"><parm name=\"APPID\" value=\"w2\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"TO-NAPID\" value=\"NAP1\"/><characteristic type=\"RESOURCE\"><parm name=\"URI\" value=\"http://letai.ru\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"STARTPAGE\"/></characteristic></characteristic></wap-provisioningdoc>";
 const char *g_pszAPNMMS = "<?xml version=\"1.0\"?><!DOCTYPE wap-provisioningdoc PUBLIC \"-//WAPFORUM//DTD PROV 1.0//EN\" \"http://www.wapforum.org/DTD/prov.dtd\"><wap-provisioningdoc version=\"1.0\"><characteristic type=\"BOOTSTRAP\"><parm name=\"NAME\" value=\"Letai MMS\"/></characteristic><characteristic type=\"PXLOGICAL\"><parm name=\"PROXY-ID\" value=\"Letai MMS\"/><parm name=\"NAME\" value=\"Letai MMS\"/><characteristic type=\"PXPHYSICAL\"><parm name=\"PHYSICAL-PROXY-ID\" value=\"PROXY 1\"/><parm name=\"PXADDR\" value=\"mmsc\"/><parm name=\"PXADDRTYPE\" value=\"ALPHA\"/><parm name=\"TO-NAPID\" value=\"NAP5\"/><characteristic type=\"PORT\"><parm name=\"PORTNBR\" value=\"8080\"></parm></characteristic></characteristic></characteristic><characteristic type=\"NAPDEF\"><parm name=\"NAPID\" value=\"NAP5\"/><parm name=\"NAME\" value=\"Letai MMS\"/><parm name=\"BEARER\" value=\"GSM-GPRS\"/><parm name=\"NAP-ADDRESS\" value=\"mms\"/><parm name=\"NAP-ADDRTYPE\" value=\"APN\"/></characteristic><characteristic type=\"APPLICATION\"><parm name=\"APPID\" value=\"w4\"/><parm name=\"NAME\" value=\"Letai MMS\"/><parm name=\"ADDR\" value=\"http://mmsc\"/><parm name=\"TO-PROXY\" value=\"Letai MMS\"/></characteristic></wap-provisioningdoc>";
 
 const char *g_pszTextInternet = "В меню мобильного телефона выберите пункт \"Настройки Интернет\" и заполните следующие параметры: Настройки Internet: APN: internet.letai.ru; Тип APN: default";
-const char *g_pszTextMMS = "В меню \"Настройки\" выберите пункт \"Сотовая связь\", \"Сотовая сеть передачи данных\" и заполните следующие параметры MMS – APN: mms; MMSC: https://mmsc:8002; MMS-прокси: mmsc:8080";
+const char *g_pszTextMMS = "В меню \"Настройки» выберите пункт \"Сотовая связь\", \"Сотовая сеть передачи данных\" и заполните следующие параметры MMS - APN: mms; MMSC: https://mmsc:8002; MMS-прокси: mmsc:8080. Перезагрузите Ваше устройство";
+
 
 int is_ascii_string(
 	const char *p_pszString,
@@ -297,21 +297,14 @@ int main(int argc, char *argv[])
 				}
 
 				/* отправляем уведомление о доставленных настройках */
-				strText = g_pszNotiPost;
-				switch (eSettingsType) {
-				case m_eMMS:
-				case m_eInternetMMS:
-					if (eSecType == m_eSimpleText)
-						strText += g_pszNotiPostOpt;
-					break;
-				default:
-					break;
+				if (eSecType != m_eSimpleText) {
+					strText = g_pszNotiPost;
+					iFnRes = put_sms(coLog, strSMSBoxHost, strSMSBoxSMSURL, strSMSBoxUserName, strSMSBoxUserPswd, strHeader, coMSISDN.v, strText);
+					LOG_N(coLog, "sms is sent with status '%d': '%s'; '%s'; '%s';", iFnRes, strHeader.c_str(), coMSISDN.v.c_str(), strText.c_str());
+					coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
+					coDelete
+						<< coRowId;
 				}
-				iFnRes = put_sms(coLog, strSMSBoxHost, strSMSBoxSMSURL, strSMSBoxUserName, strSMSBoxUserPswd, strHeader, coMSISDN.v, strText);
-				LOG_N(coLog, "sms is sent with status '%d': '%s'; '%s'; '%s';", iFnRes, strHeader.c_str(), coMSISDN.v.c_str(), strText.c_str());
-				coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
-				coDelete
-					<< coRowId;
 			}
 			pcoDBConn->commit();
 			if (coQueue.good())
