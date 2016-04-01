@@ -302,9 +302,9 @@ int main(int argc, char *argv[])
 					iFnRes = put_sms(coLog, strSMSBoxHost, strSMSBoxSMSURL, strSMSBoxUserName, strSMSBoxUserPswd, strHeader, coMSISDN.v, strText);
 					LOG_N(coLog, "sms is sent with status '%d': '%s'; '%s'; '%s';", iFnRes, strHeader.c_str(), coMSISDN.v.c_str(), strText.c_str());
 					coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
-					coDelete
-						<< coRowId;
 				}
+				coDelete
+					<< coRowId;
 			}
 			pcoDBConn->commit();
 			if (coQueue.good())
