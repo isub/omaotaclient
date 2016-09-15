@@ -187,7 +187,8 @@ int main(int argc, char *argv[])
 					>> coIMSI
 					>> coProfile
 					>> coSettingsType;
-				if (coMSISDN.is_null()) {
+        LOG_N (coLog, "row selected: '%s'; '%s'; '%s'; '%s'", coMSISDN.v.c_str(), coIMSI.v.c_str(), coProfile.v.c_str(), coSettingsType.v.c_str());
+        if (coMSISDN.is_null ()) {
 					LOG_E(coLog, "MSISDN not defined");
 					continue;
 				} else {
@@ -252,7 +253,11 @@ int main(int argc, char *argv[])
 
 				iFnRes = put_sms(coLog, strSMSBoxHost, strSMSBoxSMSURL, strSMSBoxUserName, strSMSBoxUserPswd, strHeader, coMSISDN.v, strText);
 				LOG_N(coLog, "sms is sent with status '%d': '%s'; '%s'; '%s';", iFnRes, strHeader.c_str(), coMSISDN.v.c_str(), strText.c_str());
-				coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
+        try {
+          coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
+        } catch (otl_exception &coExept) {
+          LOG_E (coLog, "code: '%d'; message: '%s'; query: '%s';", coExept.code, coExept.msg, coExept.stm_text);
+        }
 
 				/* отправляем настройки INTERNET */
 				switch (eSettingsType) {
@@ -293,7 +298,11 @@ int main(int argc, char *argv[])
 					else
 						iFnRes = put_ota(coLog, strSMSBoxHost, strSMSBoxOTAURL, strSMSBoxUserName, strSMSBoxUserPswd, strHeader, coMSISDN.v, strText, strSec, strPin);
 					LOG_N(coLog, "sms is sent with status '%d': '%s'; '%s'; '%s';", iFnRes, strHeader.c_str(), coMSISDN.v.c_str(), strText.c_str());
-					coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
+          try {
+  					coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
+          } catch (otl_exception &coExept) {
+            LOG_E (coLog, "code: '%d'; message: '%s'; query: '%s';", coExept.code, coExept.msg, coExept.stm_text);
+          }
 				}
 
 				/* отправляем уведомление о доставленных настройках */
@@ -311,10 +320,13 @@ int main(int argc, char *argv[])
           }
 					iFnRes = put_sms(coLog, strSMSBoxHost, strSMSBoxSMSURL, strSMSBoxUserName, strSMSBoxUserPswd, strHeader, coMSISDN.v, strText);
 					LOG_N(coLog, "sms is sent with status '%d': '%s'; '%s'; '%s';", iFnRes, strHeader.c_str(), coMSISDN.v.c_str(), strText.c_str());
-					coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
-				}
-				coDelete
-					<< coRowId;
+          try {
+            coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
+          } catch (otl_exception &coExept) {
+            LOG_E (coLog, "code: '%d'; message: '%s'; query: '%s';", coExept.code, coExept.msg, coExept.stm_text);
+          }
+        }
+				coDelete << coRowId;
 			}
 			pcoDBConn->commit();
 			if (coQueue.good())
