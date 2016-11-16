@@ -190,18 +190,18 @@ int main(int argc, char *argv[])
         LOG_N (coLog, "row selected: '%s'; '%s'; '%s'; '%s'", coMSISDN.v.c_str(), coIMSI.v.c_str(), coProfile.v.c_str(), coSettingsType.v.c_str());
         if (coMSISDN.is_null ()) {
 					LOG_E(coLog, "MSISDN not defined");
-					continue;
+					goto delete_and_continue;
 				} else {
 					if (coMSISDN.v[0] != '+')
 						coMSISDN.v = '+' + coMSISDN.v;
 				}
 				if (coProfile.is_null()) {
 					LOG_E(coLog, "profile not defined");
-					continue;
+					goto delete_and_continue;;
 				}
 				if (coSettingsType.is_null()) {
 					LOG_E(coLog, "settings type not defined");
-					continue;
+					goto delete_and_continue;;
 				}
 				if (0 == coProfile.v.compare("OMA CP NETWPIN")) {
 					eSecType = m_eNetwPin;
@@ -211,7 +211,7 @@ int main(int argc, char *argv[])
 					eSecType = m_eSimpleText;
 				} else {
 					LOG_E(coLog, "unsupported profile: '%s'", coProfile.v.c_str());
-					continue;
+					goto delete_and_continue;;
 				}
 
 				if (0 == coSettingsType.v.compare("INTERNET")) {
@@ -222,7 +222,7 @@ int main(int argc, char *argv[])
 					eSettingsType = m_eInternetMMS;
 				} else {
 					LOG_E(coLog, "unsupported settings type: '%s'", coSettingsType.v.c_str());
-					continue;
+					goto delete_and_continue;;
 				}
 
 				switch (eSettingsType) {
@@ -326,6 +326,7 @@ int main(int argc, char *argv[])
             LOG_E (coLog, "code: '%d'; message: '%s'; query: '%s';", coExept.code, coExept.msg, coExept.stm_text);
           }
         }
+        delete_and_continue:
 				coDelete << coRowId;
 			}
 			pcoDBConn->commit();
