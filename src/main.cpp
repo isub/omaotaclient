@@ -11,7 +11,8 @@
 enum ESettingsType {
 	m_eInternet = 1,
 	m_eMMS = 2,
-	m_eInternetMMS = 3
+	m_eInternetMMS = 3,
+	m_eIMS = 4
 };
 
 enum ESecType {
@@ -23,17 +24,22 @@ enum ESecType {
 const char *g_pszNotiInternet = "Уважаемый абонент! Автоматические настройки мобильного Интернет Letai будут доставлены следующим конфигурационным SMS";
 const char *g_pszNotiMMS = "Уважаемый абонент! Автоматические настройки MMS Letai будут доставлены следующим конфигурационным SMS";
 const char *g_pszNotiInternetMMS = "Уважаемый абонент! Автоматические настройки мобильного Интернет и MMS Letai будут доставлены в следующем СМС";
+const char *g_pszNotiIMS = "Уважаемый абонент! Автоматические настройки IMS Letai будут доставлены следующим конфигурационным SMS";
 const char *g_pszNotiOpt = ". При установке настроек используйте PIN-код 1234";
 
 const char *g_pszNotiPost = "Настройки доставлены. Сохраните их";
 const char *g_pszNotiPostInet = "Конфигурационное SMS доставлено. Проведите его установку. При невозможности установки конфигурационного SMS, в настройках сети телефона создайте и сохраните новую точку доступа (APN): Имя- Internet, APN- internet.letai.ru";
 const char *g_pszNotiPostMMS = "Конфигурационное SMS доставлено. Проведите его установку. При невозможности установки конфигурационного SMS, смотрите инструкцию по ручной настройке на сайте http://letai.ru/mobile";
+const char *g_pszNotiPostIMS = "Конфигурационное SMS доставлено. Проведите его установку. При невозможности установки конфигурационного SMS, смотрите инструкцию по ручной настройке на сайте http://letai.ru/mobile";
 
 const char *g_pszAPNInternet = "<?xml version=\"1.0\"?><!DOCTYPE wap-provisioningdoc PUBLIC \"-//WAPFORUM//DTD PROV 1.0//EN\" \"http://www.wapforum.org/DTD/prov.dtd\"><wap-provisioningdoc version=\"1.0\"><characteristic type=\"BOOTSTRAP\"><parm name=\"NAME\" value=\"Letai Internet\"/></characteristic><characteristic type=\"NAPDEF\"><parm name=\"NAPID\" value=\"NAP1\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"BEARER\" value=\"GSM-GPRS\"/><parm name=\"NAP-ADDRESS\" value=\"internet.letai.ru\"/><parm name=\"NAP-ADDRTYPE\" value=\"APN\"/></characteristic><characteristic type=\"APPLICATION\"><parm name=\"APPID\" value=\"w2\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"TO-NAPID\" value=\"NAP1\"/><characteristic type=\"RESOURCE\"><parm name=\"URI\" value=\"http://letai.ru\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"STARTPAGE\"/></characteristic></characteristic></wap-provisioningdoc>";
 const char *g_pszAPNMMS = "<?xml version=\"1.0\"?><!DOCTYPE wap-provisioningdoc PUBLIC \"-//WAPFORUM//DTD PROV 1.0//EN\" \"http://www.wapforum.org/DTD/prov.dtd\"><wap-provisioningdoc version=\"1.0\"><characteristic type=\"BOOTSTRAP\"><parm name=\"NAME\" value=\"Letai MMS\"/></characteristic><characteristic type=\"PXLOGICAL\"><parm name=\"PROXY-ID\" value=\"Letai MMS\"/><parm name=\"NAME\" value=\"Letai MMS\"/><characteristic type=\"PXPHYSICAL\"><parm name=\"PHYSICAL-PROXY-ID\" value=\"PROXY 1\"/><parm name=\"PXADDR\" value=\"mmsc\"/><parm name=\"PXADDRTYPE\" value=\"ALPHA\"/><parm name=\"TO-NAPID\" value=\"NAP5\"/><characteristic type=\"PORT\"><parm name=\"PORTNBR\" value=\"8080\"></parm></characteristic></characteristic></characteristic><characteristic type=\"NAPDEF\"><parm name=\"NAPID\" value=\"NAP5\"/><parm name=\"NAME\" value=\"Letai MMS\"/><parm name=\"BEARER\" value=\"GSM-GPRS\"/><parm name=\"NAP-ADDRESS\" value=\"mms\"/><parm name=\"NAP-ADDRTYPE\" value=\"APN\"/></characteristic><characteristic type=\"APPLICATION\"><parm name=\"APPID\" value=\"w4\"/><parm name=\"NAME\" value=\"Letai MMS\"/><parm name=\"ADDR\" value=\"http://mmsc\"/><parm name=\"TO-PROXY\" value=\"Letai MMS\"/></characteristic></wap-provisioningdoc>";
 
 const char *g_pszTextInternet = "В меню \"Настройки\" выберите пункт \"Сотовая связь\", \"Сотовая сеть передачи данных\" и заполните следующие параметры Сотовые данные - APN: internet.letai.ru";
 const char *g_pszTextMMS = "В меню \"Настройки\" выберите пункт \"Сотовая связь\", \"Сотовая сеть передачи данных\" и заполните следующие параметры MMS - APN: mms; MMSC: https://mmsc:8002; MMS-прокси: mmsc:8080. Перезагрузите Ваше устройство";
+const char *g_pszTextIMS = "Автоматические настройки IMS для вашего абонентского устройства не распространяются";
+
+const char *g_pszConfIMS = "<?xml version=\"1.0\"?><!DOCTYPE wap-provisioningdoc PUBLIC \"-//WAPFORUM//DTD PROV 1.0//EN\" \"http://www.wapforum.org/DTD/prov.dtd\"><wap-provisioningdoc version=\"1.0\"><characteristic type=\"APPLICATION\"><parm name=\"APPID\" value=\"ap2001\" /><parm name=\"NAME\" value=\"IMS-account\" /></characteristic></wap-provisioningdoc>";
 
 int is_ascii_string(
 	const char *p_pszString,
@@ -220,6 +226,8 @@ int main(int argc, char *argv[])
 					eSettingsType = m_eMMS;
 				} else if (0 == coSettingsType.v.compare("INTERNET+MMS")) {
 					eSettingsType = m_eInternetMMS;
+				} else if (0 == coSettingsType.v.compare("IMS")) {
+					eSettingsType = m_eIMS;
 				} else {
 					LOG_E(coLog, "unsupported settings type: '%s'", coSettingsType.v.c_str());
 					continue;
@@ -235,6 +243,9 @@ int main(int argc, char *argv[])
         case m_eInternetMMS:
 					strText = g_pszNotiInternetMMS;
 					break;
+        case m_eIMS:
+          strText = g_pszNotiIMS;
+          break;
 				}
 
 				switch (eSecType) {
@@ -305,6 +316,30 @@ int main(int argc, char *argv[])
           }
 				}
 
+				/* отправялем настройки IMS */
+				switch (eSettingsType) {
+				case m_eIMS:
+					if (eSecType == m_eSimpleText)
+            strText = g_pszTextIMS;
+					else
+						strText = g_pszConfIMS;
+					break;
+				default:
+          strText.clear ();
+        }
+				if (strText.length()) {
+					if (eSecType == m_eSimpleText)
+						iFnRes = put_sms(coLog, strSMSBoxHost, strSMSBoxSMSURL, strSMSBoxUserName, strSMSBoxUserPswd, strHeader, coMSISDN.v, strText);
+					else
+						iFnRes = put_ota(coLog, strSMSBoxHost, strSMSBoxOTAURL, strSMSBoxUserName, strSMSBoxUserPswd, strHeader, coMSISDN.v, strText, strSec, strPin);
+					LOG_N(coLog, "sms is sent with status '%d': '%s'; '%s'; '%s';", iFnRes, strHeader.c_str(), coMSISDN.v.c_str(), strText.c_str());
+          try {
+  					coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
+          } catch (otl_exception &coExept) {
+            LOG_E (coLog, "code: '%d'; message: '%s'; query: '%s';", coExept.code, coExept.msg, coExept.stm_text);
+          }
+				}
+
 				/* отправляем уведомление о доставленных настройках */
 				if (eSecType != m_eSimpleText) {
           switch (eSettingsType) {
@@ -313,6 +348,9 @@ int main(int argc, char *argv[])
             break;
           case m_eMMS:
             strText = g_pszNotiPostMMS;
+            break;
+          case m_eIMS:
+            strText = g_pszNotiIMS;
             break;
           default:
             strText = g_pszNotiPost;
@@ -550,7 +588,6 @@ int put_ota(
 	std::string &p_strPin)
 {
 	int iRetVal = 0;
-	int iFnRes;
 
 	/* инициализация дескриптора */
 	CURL *pCurl = curl_easy_init();
@@ -690,7 +727,7 @@ void IMSI2SemiOctet(
 	else
 		p_strSemiOctet += '8';
 
-	for (int i = 1; i < p_strIMSI.length(); ++i, ++i) {
+	for (unsigned int i = 1; i < p_strIMSI.length(); ++i, ++i) {
 		if (i + 1 < p_strIMSI.length())
 			p_strSemiOctet += p_strIMSI[i + 1];
 		else
