@@ -8,7 +8,7 @@ UTL_H = -I../..
 omaotaclient: ./obj/main.o ./obj/dbpool.o ./obj/log.o ./obj/config.o
 	g++ -o ../omaotaclient ./obj/main.o ./obj/dbpool.o ./obj/config.o ./obj/log.o $(ORA_LIB_DIR) $(ORA_LIB) -lcurl
 ./obj/main.o: main.cpp
-	g++  $(UTL_H) $(ORA_H) -c main.cpp -o ./obj/main.o
+	g++ -Wall -Wextra $(UTL_H) $(ORA_H) -c main.cpp -o ./obj/main.o
 ./obj/dbpool.o: $(UTL_DIR)/dbpool/dbpool.cpp
 	g++ -c $(UTL_DIR)/dbpool/dbpool.cpp $(UTL_H) $(ORA_H) -o ./obj/dbpool.o
 ./obj/config.o: $(UTL_DIR)/config/config.cpp
