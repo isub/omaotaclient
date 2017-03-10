@@ -18,7 +18,8 @@ enum EProfile {
 	m_eUserPin = 1,
 	m_eNetwPin = 2,
 	m_eSimpleText = 3,
-  m_eSimpleWnd = 4
+  m_eSimpleWnd = 4,
+  m_eHonor = 5
 };
 
 const char *g_pszNotiInet     = "Автоматические настройки мобильного интернета будут доставлены следующим конфигурационным SMS";
@@ -31,6 +32,7 @@ const char *g_pszNotiPostMMS      = "Конфигурационное SMS дос
 const char *g_pszNotiPostInetMMS  = "Конфигурационное SMS доставлено. Проведите его установку. При невозможности установки конфигурационного SMS, для настройки мобильного интернета в меню \"Настройки\" выберите пункт \"Мобильные сети\", \"Точки доступа\" и разделе \"Интернет\" создайте новую точку доступа, введите параметры Имя: Internet, APN: internet.letai.ru. Для настройки MMS в разделе \"MMS\" создайте новую точку доступа, введите параметры Имя: MMS; APN(Точка доступа): mms; MMSC: https://mmsc:8002; MMS-прокси: mmsc; Порт MMS: 8080. Перезагрузите Ваше устройство.";
 
 const char *g_pszAPNInet  = "<?xml version=\"1.0\"?><!DOCTYPE wap-provisioningdoc PUBLIC \"-//WAPFORUM//DTD PROV 1.0//EN\" \"http://www.wapforum.org/DTD/prov.dtd\"><wap-provisioningdoc version=\"1.0\"><characteristic type=\"BOOTSTRAP\"><parm name=\"NAME\" value=\"Letai Internet\"/></characteristic><characteristic type=\"NAPDEF\"><parm name=\"NAPID\" value=\"NAP1\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"BEARER\" value=\"GSM-GPRS\"/><parm name=\"NAP-ADDRESS\" value=\"internet.letai.ru\"/><parm name=\"NAP-ADDRTYPE\" value=\"APN\"/></characteristic><characteristic type=\"APPLICATION\"><parm name=\"APPID\" value=\"w2\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"TO-NAPID\" value=\"NAP1\"/><characteristic type=\"RESOURCE\"><parm name=\"URI\" value=\"http://letai.ru\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"STARTPAGE\"/></characteristic></characteristic></wap-provisioningdoc>";
+const char *g_pszAPNInetHonor = "<?xml version=\"1.0\"?><!DOCTYPE wap-provisioningdoc PUBLIC \"-//WAPFORUM//DTD PROV 1.0//EN\" \"http://www.wapforum.org/DTD/prov.dtd\"><wap-provisioningdoc version=\"1.0\"><characteristic type=\"NAPDEF\"><parm name=\"NAPID\" value=\"NAP1\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"BEARER\" value=\"GSM-GPRS\"/><parm name=\"NAP-ADDRESS\" value=\"internet.letai.ru\"/><parm name=\"NAP-ADDRTYPE\" value=\"APN\"/></characteristic><characteristic type=\"APPLICATION\"><parm name=\"APPID\" value=\"w2\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"TO-NAPID\" value=\"NAP1\"/><characteristic type=\"RESOURCE\"><parm name=\"URI\" value=\"http://letai.ru\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"STARTPAGE\"/></characteristic></characteristic></wap-provisioningdoc>";
 const char *g_pszAPNMMS   = "<?xml version=\"1.0\"?><!DOCTYPE wap-provisioningdoc PUBLIC \"-//WAPFORUM//DTD PROV 1.0//EN\" \"http://www.wapforum.org/DTD/prov.dtd\"><wap-provisioningdoc version=\"1.0\"><characteristic type=\"BOOTSTRAP\"><parm name=\"NAME\" value=\"Letai MMS\"/></characteristic><characteristic type=\"PXLOGICAL\"><parm name=\"PROXY-ID\" value=\"Letai MMS\"/><parm name=\"NAME\" value=\"Letai MMS\"/><characteristic type=\"PXPHYSICAL\"><parm name=\"PHYSICAL-PROXY-ID\" value=\"PROXY 1\"/><parm name=\"PXADDR\" value=\"mmsc\"/><parm name=\"PXADDRTYPE\" value=\"ALPHA\"/><parm name=\"TO-NAPID\" value=\"NAP5\"/><characteristic type=\"PORT\"><parm name=\"PORTNBR\" value=\"8080\"></parm></characteristic></characteristic></characteristic><characteristic type=\"NAPDEF\"><parm name=\"NAPID\" value=\"NAP5\"/><parm name=\"NAME\" value=\"Letai MMS\"/><parm name=\"BEARER\" value=\"GSM-GPRS\"/><parm name=\"NAP-ADDRESS\" value=\"mms\"/><parm name=\"NAP-ADDRTYPE\" value=\"APN\"/></characteristic><characteristic type=\"APPLICATION\"><parm name=\"APPID\" value=\"w4\"/><parm name=\"NAME\" value=\"Letai MMS\"/><parm name=\"ADDR\" value=\"http://mmsc\"/><parm name=\"TO-PROXY\" value=\"Letai MMS\"/></characteristic></wap-provisioningdoc>";
 
 const char *g_pszTextInet = "Настройки мобильного интернета. В меню \"Настройки\" выберите пункт \"Сотовая связь\", \"Сотовая сеть передачи данных\" и в разделе \"Сотовые данные\" заполните параметр APN: internet.letai.ru";
@@ -71,7 +73,8 @@ void append_urlparam(
 	std::string &p_strParamSet,
 	const char *p_pszParamName,
 	std::string &p_strParam,
-	bool &p_bFirstParam);
+  bool p_bValueURLEncode,
+  bool &p_bFirstParam);
 void IMSI2SemiOctet(
 	std::string &p_strIMSI,
 	std::string &p_strSemiOctet);
@@ -215,7 +218,9 @@ int main(int argc, char *argv[])
 					eProfile = m_eSimpleText;
 				} else if (0 == coProfile.v.compare("SIMPLE TEXT WND")) {
 					eProfile = m_eSimpleWnd;
-				} else {
+				} else if ( 0 == coProfile.v.compare( "HONOR" ) ) {
+          eProfile = m_eHonor;
+        } else {
 					LOG_E(coLog, "unsupported profile: '%s'", coProfile.v.c_str());
 					goto delete_and_continue;;
 				}
@@ -245,20 +250,21 @@ int main(int argc, char *argv[])
 				}
 
 				switch (eProfile) {
-				case m_eUserPin:
-					strSec = "userpin";
-					strPin = "1234";
-					strText += g_pszNotiOpt;
-					break;
-				case m_eNetwPin:
-					strSec = "netwpin";
-					IMSI2SemiOctet(coIMSI.v, strPin);
-					break;
-				case m_eSimpleText:
-        case m_eSimpleWnd:
-          /* для текстовых настроек уведомление не посылается */
-          strText.clear ();
-					break;
+				  case m_eUserPin:
+          case m_eHonor:
+					  strSec = "userpin";
+					  strPin = "1234";
+					  strText += g_pszNotiOpt;
+					  break;
+				  case m_eNetwPin:
+					  strSec = "netwpin";
+					  IMSI2SemiOctet(coIMSI.v, strPin);
+					  break;
+				  case m_eSimpleText:
+          case m_eSimpleWnd:
+            /* для текстовых настроек уведомление не посылается */
+            strText.clear ();
+					  break;
 				}
 
         if (0 != strText.length()) {
@@ -279,6 +285,8 @@ int main(int argc, char *argv[])
 						strText = g_pszTextInet;
           } else if (eProfile == m_eSimpleWnd) {
             strText = g_pszTextInetWnd;
+          } else if (eProfile == m_eHonor) {
+            strText = g_pszAPNInetHonor;
           } else {
 						strText = g_pszAPNInet;
           }
@@ -444,12 +452,12 @@ int put_sms(
 		std::string strParam;
 		strURL += p_strHost;
 		strURL += p_strURL;
-		append_urlparam(pCurl, strParam, "username", p_strUserName, bFirst);
-		append_urlparam(pCurl, strParam, "password", p_strUserPswd, bFirst);
-		append_urlparam(pCurl, strParam, "from", p_strFrom, bFirst);
-		append_urlparam(pCurl, strParam, "to", p_strTo, bFirst);
-		append_urlparam(pCurl, strParam, "text", strText, bFirst);
-		append_urlparam(pCurl, strParam, "coding", strCoding, bFirst);
+		append_urlparam(pCurl, strParam, "username", p_strUserName, true, bFirst);
+		append_urlparam(pCurl, strParam, "password", p_strUserPswd, true, bFirst);
+		append_urlparam(pCurl, strParam, "from", p_strFrom, true, bFirst);
+		append_urlparam(pCurl, strParam, "to", p_strTo, true, bFirst);
+		append_urlparam(pCurl, strParam, "text", strText, true, bFirst);
+		append_urlparam(pCurl, strParam, "coding", strCoding, true, bFirst);
 		strURL += strParam;
 		curlCode = curl_easy_setopt(pCurl, CURLOPT_URL, strURL.c_str());
 		if (curlCode) {
@@ -611,18 +619,18 @@ int put_ota(
 		std::string strParam;
 		strURL += p_strHost;
 		strURL += p_strURL;
-		append_urlparam(pCurl, strParam, "username", p_strUserName, bFirst);
-		append_urlparam(pCurl, strParam, "password", p_strUserPswd, bFirst);
+		append_urlparam(pCurl, strParam, "username", p_strUserName, true, bFirst);
+		append_urlparam(pCurl, strParam, "password", p_strUserPswd, true, bFirst);
 		if (p_strFrom.length())
-			append_urlparam(pCurl, strParam, "from", p_strFrom, bFirst);
-		append_urlparam(pCurl, strParam, "to", p_strTo, bFirst);
-		append_urlparam(pCurl, strParam, "text", p_strText, bFirst);
+			append_urlparam(pCurl, strParam, "from", p_strFrom, true, bFirst);
+		append_urlparam(pCurl, strParam, "to", p_strTo, true, bFirst);
+		append_urlparam(pCurl, strParam, "text", p_strText, true, bFirst);
 		std::string strType("oma-settings");
-		append_urlparam(pCurl, strParam, "type", strType, bFirst);
+		append_urlparam(pCurl, strParam, "type", strType, true, bFirst);
 		if (p_strSec.length())
-			append_urlparam(pCurl, strParam, "sec", p_strSec, bFirst);
+			append_urlparam(pCurl, strParam, "sec", p_strSec, true, bFirst);
 		if (p_strPin.length())
-			append_urlparam(pCurl, strParam, "pin", p_strPin, bFirst);
+			append_urlparam(pCurl, strParam, "pin", p_strPin, false, bFirst);
 		strURL += strParam;
 		curlCode = curl_easy_setopt(pCurl, CURLOPT_URL, strURL.c_str());
 		if (curlCode) {
@@ -669,6 +677,7 @@ void append_urlparam(
 	std::string &p_strParamSet,
 	const char *p_pszParamName,
 	std::string &p_strParamVal,
+  bool p_bValueURLEncode,
 	bool &p_bFirstParam)
 {
 	char *pszEncodedString;
@@ -687,11 +696,15 @@ void append_urlparam(
 		}
 	}
 	if (p_strParamVal.length()) {
-		pszEncodedString = curl_easy_escape(pCurl, p_strParamVal.data(), p_strParamVal.length());
-		if (pszEncodedString) {
-			p_strParamSet += pszEncodedString;
-			curl_free(pszEncodedString);
-		}
+    if ( p_bValueURLEncode ) {
+      pszEncodedString = curl_easy_escape( pCurl, p_strParamVal.data(), p_strParamVal.length() );
+      if ( pszEncodedString ) {
+        p_strParamSet += pszEncodedString;
+        curl_free( pszEncodedString );
+      }
+    } else {
+      p_strParamSet += p_strParamVal;
+    }
 	}
 }
 
@@ -699,21 +712,26 @@ void IMSI2SemiOctet(
 	std::string &p_strIMSI,
 	std::string &p_strSemiOctet)
 {
-	if (p_strIMSI.length() == 0)
-		return;
+  if ( p_strIMSI.length() == 0 ) {
+    return;
+  }
 
-	p_strSemiOctet = p_strIMSI[0];
+  p_strSemiOctet = '%';
+	p_strSemiOctet += p_strIMSI[0];
 
-	if (p_strIMSI.length() % 2)
-		p_strSemiOctet += '9';
-	else
-		p_strSemiOctet += '8';
+  if( 0 != p_strIMSI.length() % 2 ) {
+    p_strSemiOctet += '9';
+  } else {
+    p_strSemiOctet += '8';
+  }
 
 	for (size_t i = 1; i < p_strIMSI.length(); ++i, ++i) {
-		if (i + 1 < p_strIMSI.length())
-			p_strSemiOctet += p_strIMSI[i + 1];
-		else
-			p_strSemiOctet += 'F';
+    p_strSemiOctet += '%';
+    if ( i + 1 < p_strIMSI.length() ) {
+      p_strSemiOctet += p_strIMSI[ i + 1 ];
+    } else {
+      p_strSemiOctet += 'F';
+    }
 		p_strSemiOctet += p_strIMSI[i];
 	}
 }
