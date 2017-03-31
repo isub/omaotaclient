@@ -137,10 +137,6 @@ int main(int argc, char *argv[])
 	otl_connect *pcoDBConn = NULL;
 	pcoDBConn = db_pool_get();
 
-	coQueue.set_commit(0);
-	coResult.set_commit(0);
-	coDelete.set_commit(0);
-
 	/* запрашиваем необходимые параметры */
 	pszParamName = "smsbox_username";
 	iFnRes = coConf.GetParamValue(pszParamName, strSMSBoxUserName);
@@ -274,6 +270,7 @@ int main(int argc, char *argv[])
             coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
           } catch (otl_exception &coExept) {
             LOG_E (coLog, "code: '%d'; message: '%s'; query: '%s';", coExept.code, coExept.msg, coExept.stm_text);
+            coResult.clean();
           }
         }
 
@@ -301,8 +298,13 @@ int main(int argc, char *argv[])
 						iFnRes = put_ota(coLog, strSMSBoxHost, strSMSBoxOTAURL, strSMSBoxUserName, strSMSBoxUserPswd, strHeader, coMSISDN.v, strText, strSec, strPin);
           }
 					LOG_N(coLog, "sms is sent with status '%d': '%s'; '%s'; '%s';", iFnRes, strHeader.c_str(), coMSISDN.v.c_str(), strText.c_str());
-					coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
-				}
+          try {
+            coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
+          } catch ( otl_exception &coExept ) {
+            LOG_E( coLog, "code: '%d'; message: '%s'; query: '%s';", coExept.code, coExept.msg, coExept.stm_text );
+            coResult.clean();
+          }
+        }
 
 				/* отправялем настройки MMS */
 				switch (eSettingsType) {
@@ -329,6 +331,7 @@ int main(int argc, char *argv[])
   					coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
           } catch (otl_exception &coExept) {
             LOG_E (coLog, "code: '%d'; message: '%s'; query: '%s';", coExept.code, coExept.msg, coExept.stm_text);
+            coResult.clean();
           }
 				}
 
@@ -351,26 +354,14 @@ int main(int argc, char *argv[])
             coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
           } catch (otl_exception &coExept) {
             LOG_E (coLog, "code: '%d'; message: '%s'; query: '%s';", coExept.code, coExept.msg, coExept.stm_text);
+            coResult.clean();
           }
         }
         delete_and_continue:
 				coDelete << coRowId;
 			}
-			pcoDBConn->commit();
-			if (coQueue.good())
-				coQueue.close();
-			if (coResult.good())
-				coResult.close();
-			if (coDelete.good())
-				coDelete.close();
 		} catch (otl_exception &coExept) {
 			LOG_E(coLog, "code: '%d'; message: '%s'; query: '%s';", coExept.code, coExept.msg, coExept.stm_text);
-			if (coQueue.good())
-				coQueue.close();
-			if (coResult.good())
-				coResult.close();
-			if (coDelete.good())
-				coDelete.close();
 		}
 	} else {
 		LOG_E(coLog, "can't get DB connection");
