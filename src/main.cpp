@@ -23,24 +23,24 @@ enum EProfile {
 	m_eHonor = 5
 };
 
-const char *g_pszNotiInet     = "Автоматические настройки мобильного интернета будут доставлены следующим конфигурационным SMS";
-const char *g_pszNotiMMS      = "Автоматические настройки MMS будут доставлены следующим конфигурационным SMS";
-const char *g_pszNotiInetMMS  = "Автоматические настройки мобильного интернета и MMS будут доставлены следующим конфигурационным SMS";
-const char *g_pszNotiOpt      = ". При установке настроек используйте PIN-код 1234";
+const char *g_pszNotiInet			= "Автоматические настройки мобильного интернета будут доставлены следующим конфигурационным SMS";
+const char *g_pszNotiMMS			= "Автоматические настройки MMS будут доставлены следующим конфигурационным SMS";
+const char *g_pszNotiInetMMS		= "Автоматические настройки мобильного интернета и MMS будут доставлены следующим конфигурационным SMS";
+const char *g_pszNotiOpt			= ". При установке настроек используйте PIN-код 1234";
 
-const char *g_pszNotiPostInet     = "Конфигурационное SMS доставлено. Проведите его установку. При невозможности установки конфигурационного SMS, в меню \"Настройки\" выберите пункт \"Мобильные сети\", \"Точки доступа\" и разделе \"Интернет\" создайте новую точку доступа, введите параметры Имя: Internet, APN: internet.letai.ru. Перезагрузите Ваше устройство.";
-const char *g_pszNotiPostMMS      = "Конфигурационное SMS доставлено. Проведите его установку. При невозможности установки конфигурационного SMS, в меню \"Настройки\" выберите пункт \"Мобильные сети\", \"Точки доступа\" и в разделе \"MMS\" создайте новую точку доступа, введите параметры Имя: MMS; APN(Точка доступа): mms; MMSC: https://mmsc:8002; MMS-прокси: mmsc; Порт MMS: 8080. Перезагрузите Ваше устройство.";
-const char *g_pszNotiPostInetMMS  = "Конфигурационное SMS доставлено. Проведите его установку. При невозможности установки конфигурационного SMS, для настройки мобильного интернета в меню \"Настройки\" выберите пункт \"Мобильные сети\", \"Точки доступа\" и разделе \"Интернет\" создайте новую точку доступа, введите параметры Имя: Internet, APN: internet.letai.ru. Для настройки MMS в разделе \"MMS\" создайте новую точку доступа, введите параметры Имя: MMS; APN(Точка доступа): mms; MMSC: https://mmsc:8002; MMS-прокси: mmsc; Порт MMS: 8080. Перезагрузите Ваше устройство.";
+const char *g_pszNotiPostInet		= "Конфигурационное SMS доставлено. Проведите его установку. При невозможности установки конфигурационного SMS, в меню \"Настройки\" выберите пункт \"Мобильные сети\", \"Точки доступа\" и разделе \"Интернет\" создайте новую точку доступа, введите параметры Имя: Internet, APN: internet.letai.ru. Перезагрузите Ваше устройство.";
+const char *g_pszNotiPostMMS		= "Конфигурационное SMS доставлено. Проведите его установку. При невозможности установки конфигурационного SMS, в меню \"Настройки\" выберите пункт \"Мобильные сети\", \"Точки доступа\" и в разделе \"MMS\" создайте новую точку доступа, введите параметры Имя: MMS; APN(Точка доступа): mms; MMSC: https://mmsc:8002; MMS-прокси: mmsc; Порт MMS: 8080. Перезагрузите Ваше устройство.";
+const char *g_pszNotiPostInetMMS	= "Конфигурационное SMS доставлено. Проведите его установку. При невозможности установки конфигурационного SMS, для настройки мобильного интернета в меню \"Настройки\" выберите пункт \"Мобильные сети\", \"Точки доступа\" и разделе \"Интернет\" создайте новую точку доступа, введите параметры Имя: Internet, APN: internet.letai.ru. Для настройки MMS в разделе \"MMS\" создайте новую точку доступа, введите параметры Имя: MMS; APN(Точка доступа): mms; MMSC: https://mmsc:8002; MMS-прокси: mmsc; Порт MMS: 8080. Перезагрузите Ваше устройство.";
 
-const char *g_pszAPNInet  = "<?xml version=\"1.0\"?><!DOCTYPE wap-provisioningdoc PUBLIC \"-//WAPFORUM//DTD PROV 1.0//EN\" \"http://www.wapforum.org/DTD/prov.dtd\"><wap-provisioningdoc version=\"1.0\"><characteristic type=\"BOOTSTRAP\"><parm name=\"NAME\" value=\"Letai Internet\"/></characteristic><characteristic type=\"NAPDEF\"><parm name=\"NAPID\" value=\"NAP1\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"BEARER\" value=\"GSM-GPRS\"/><parm name=\"NAP-ADDRESS\" value=\"internet.letai.ru\"/><parm name=\"NAP-ADDRTYPE\" value=\"APN\"/></characteristic><characteristic type=\"APPLICATION\"><parm name=\"APPID\" value=\"w2\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"TO-NAPID\" value=\"NAP1\"/><characteristic type=\"RESOURCE\"><parm name=\"URI\" value=\"http://letai.ru\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"STARTPAGE\"/></characteristic></characteristic></wap-provisioningdoc>";
-const char *g_pszAPNInetHonor = "<?xml version=\"1.0\"?><!DOCTYPE wap-provisioningdoc PUBLIC \"-//WAPFORUM//DTD PROV 1.0//EN\" \"http://www.wapforum.org/DTD/prov.dtd\"><wap-provisioningdoc version=\"1.0\"><characteristic type=\"NAPDEF\"><parm name=\"NAPID\" value=\"NAP1\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"BEARER\" value=\"GSM-GPRS\"/><parm name=\"NAP-ADDRESS\" value=\"internet.letai.ru\"/><parm name=\"NAP-ADDRTYPE\" value=\"APN\"/></characteristic><characteristic type=\"APPLICATION\"><parm name=\"APPID\" value=\"w2\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"TO-NAPID\" value=\"NAP1\"/><characteristic type=\"RESOURCE\"><parm name=\"URI\" value=\"http://letai.ru\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"STARTPAGE\"/></characteristic></characteristic></wap-provisioningdoc>";
-const char *g_pszAPNMMS   = "<?xml version=\"1.0\"?><!DOCTYPE wap-provisioningdoc PUBLIC \"-//WAPFORUM//DTD PROV 1.0//EN\" \"http://www.wapforum.org/DTD/prov.dtd\"><wap-provisioningdoc version=\"1.0\"><characteristic type=\"BOOTSTRAP\"><parm name=\"NAME\" value=\"Letai MMS\"/></characteristic><characteristic type=\"PXLOGICAL\"><parm name=\"PROXY-ID\" value=\"Letai MMS\"/><parm name=\"NAME\" value=\"Letai MMS\"/><characteristic type=\"PXPHYSICAL\"><parm name=\"PHYSICAL-PROXY-ID\" value=\"PROXY 1\"/><parm name=\"PXADDR\" value=\"mmsc\"/><parm name=\"PXADDRTYPE\" value=\"ALPHA\"/><parm name=\"TO-NAPID\" value=\"NAP5\"/><characteristic type=\"PORT\"><parm name=\"PORTNBR\" value=\"8080\"></parm></characteristic></characteristic></characteristic><characteristic type=\"NAPDEF\"><parm name=\"NAPID\" value=\"NAP5\"/><parm name=\"NAME\" value=\"Letai MMS\"/><parm name=\"BEARER\" value=\"GSM-GPRS\"/><parm name=\"NAP-ADDRESS\" value=\"mms\"/><parm name=\"NAP-ADDRTYPE\" value=\"APN\"/></characteristic><characteristic type=\"APPLICATION\"><parm name=\"APPID\" value=\"w4\"/><parm name=\"NAME\" value=\"Letai MMS\"/><parm name=\"ADDR\" value=\"http://mmsc\"/><parm name=\"TO-PROXY\" value=\"Letai MMS\"/></characteristic></wap-provisioningdoc>";
+const char *g_pszAPNInet			= "<?xml version=\"1.0\"?><!DOCTYPE wap-provisioningdoc PUBLIC \"-//WAPFORUM//DTD PROV 1.0//EN\" \"http://www.wapforum.org/DTD/prov.dtd\"><wap-provisioningdoc version=\"1.0\"><characteristic type=\"BOOTSTRAP\"><parm name=\"NAME\" value=\"Letai Internet\"/></characteristic><characteristic type=\"NAPDEF\"><parm name=\"NAPID\" value=\"NAP1\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"BEARER\" value=\"GSM-GPRS\"/><parm name=\"NAP-ADDRESS\" value=\"internet.letai.ru\"/><parm name=\"NAP-ADDRTYPE\" value=\"APN\"/></characteristic><characteristic type=\"APPLICATION\"><parm name=\"APPID\" value=\"w2\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"TO-NAPID\" value=\"NAP1\"/><characteristic type=\"RESOURCE\"><parm name=\"URI\" value=\"http://letai.ru\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"STARTPAGE\"/></characteristic></characteristic></wap-provisioningdoc>";
+const char *g_pszAPNInetHonor		= "<?xml version=\"1.0\"?><!DOCTYPE wap-provisioningdoc PUBLIC \"-//WAPFORUM//DTD PROV 1.0//EN\" \"http://www.wapforum.org/DTD/prov.dtd\"><wap-provisioningdoc version=\"1.0\"><characteristic type=\"NAPDEF\"><parm name=\"NAPID\" value=\"NAP1\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"BEARER\" value=\"GSM-GPRS\"/><parm name=\"NAP-ADDRESS\" value=\"internet.letai.ru\"/><parm name=\"NAP-ADDRTYPE\" value=\"APN\"/></characteristic><characteristic type=\"APPLICATION\"><parm name=\"APPID\" value=\"w2\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"TO-NAPID\" value=\"NAP1\"/><characteristic type=\"RESOURCE\"><parm name=\"URI\" value=\"http://letai.ru\"/><parm name=\"NAME\" value=\"Letai Internet\"/><parm name=\"STARTPAGE\"/></characteristic></characteristic></wap-provisioningdoc>";
+const char *g_pszAPNMMS				= "<?xml version=\"1.0\"?><!DOCTYPE wap-provisioningdoc PUBLIC \"-//WAPFORUM//DTD PROV 1.0//EN\" \"http://www.wapforum.org/DTD/prov.dtd\"><wap-provisioningdoc version=\"1.0\"><characteristic type=\"BOOTSTRAP\"><parm name=\"NAME\" value=\"Letai MMS\"/></characteristic><characteristic type=\"PXLOGICAL\"><parm name=\"PROXY-ID\" value=\"Letai MMS\"/><parm name=\"NAME\" value=\"Letai MMS\"/><characteristic type=\"PXPHYSICAL\"><parm name=\"PHYSICAL-PROXY-ID\" value=\"PROXY 1\"/><parm name=\"PXADDR\" value=\"mmsc\"/><parm name=\"PXADDRTYPE\" value=\"ALPHA\"/><parm name=\"TO-NAPID\" value=\"NAP5\"/><characteristic type=\"PORT\"><parm name=\"PORTNBR\" value=\"8080\"></parm></characteristic></characteristic></characteristic><characteristic type=\"NAPDEF\"><parm name=\"NAPID\" value=\"NAP5\"/><parm name=\"NAME\" value=\"Letai MMS\"/><parm name=\"BEARER\" value=\"GSM-GPRS\"/><parm name=\"NAP-ADDRESS\" value=\"mms\"/><parm name=\"NAP-ADDRTYPE\" value=\"APN\"/></characteristic><characteristic type=\"APPLICATION\"><parm name=\"APPID\" value=\"w4\"/><parm name=\"NAME\" value=\"Letai MMS\"/><parm name=\"ADDR\" value=\"http://mmsc\"/><parm name=\"TO-PROXY\" value=\"Letai MMS\"/></characteristic></wap-provisioningdoc>";
 
-const char *g_pszTextInet = "Настройки мобильного интернета. В меню \"Настройки\" выберите пункт \"Сотовая связь\", \"Сотовая сеть передачи данных\" и в разделе \"Сотовые данные\" заполните параметры: Имя: letai; APN: internet.letai.ru; Тип APN: default; Протокол роуминга APN: IPv4";
-const char *g_pszTextMMS  = "Настройки MMS. В меню \"Настройки\" выберите пункт \"Сотовая связь\", \"Сотовая сеть передачи данных\" и в разделе \"MMS\" заполните параметры: Имя: letai mms; APN: mms; MMSC: http://mmsc; Прокси-сервер: mmsc; Порт MMS: 8080; Тип APN: mms. Перезагрузите Ваше устройство.";
+const char *g_pszTextInet			= "Настройки мобильного интернета. В меню \"Настройки\" выберите пункт \"Сотовая связь\", \"Сотовая сеть передачи данных\" и в разделе \"Сотовые данные\" заполните параметры: Имя: letai; APN: internet.letai.ru; Тип APN: default; Протокол роуминга APN: IPv4";
+const char *g_pszTextMMS			= "Настройки MMS. В меню \"Настройки\" выберите пункт \"Сотовая связь\", \"Сотовая сеть передачи данных\" и в разделе \"MMS\" заполните параметры: Имя: letai mms; APN: mms; MMSC: http://mmsc; Прокси-сервер: mmsc; Порт MMS: 8080; Тип APN: mms. Перезагрузите Ваше устройство.";
 
-const char *g_pszTextInetWnd = "Настройки мобильного интернета. В меню \"Настройки\" выберите пункт \"Сотовая сеть\" и в разделе \"Точки интернет-доступа\" заполните параметр APN(Точка доступа): internet.letai.ru";
-const char *g_pszTextMMSWnd  = "Настройки MMS. В меню \"Настройки\" выберите пункт \"Сотовая сеть\", в разделе \"Настройки SIM-карты\" добавьте новую точку доступа MMS и заполните параметры APN(Точка доступа): mms; MMS-центр: https://mmsc:8002; Порт MMS: 8080. Перезагрузите Ваше устройство.";
+const char *g_pszTextInetWnd		= "Настройки мобильного интернета. В меню \"Настройки\" выберите пункт \"Сотовая сеть\" и в разделе \"Точки интернет-доступа\" заполните параметр APN(Точка доступа): internet.letai.ru";
+const char *g_pszTextMMSWnd			= "Настройки MMS. В меню \"Настройки\" выберите пункт \"Сотовая сеть\", в разделе \"Настройки SIM-карты\" добавьте новую точку доступа MMS и заполните параметры APN(Точка доступа): mms; MMS-центр: https://mmsc:8002; Порт MMS: 8080. Перезагрузите Ваше устройство.";
 
 int is_ascii_string(
 	const char *p_pszString,
@@ -74,8 +74,8 @@ void append_urlparam(
 	std::string &p_strParamSet,
 	const char *p_pszParamName,
 	std::string &p_strParam,
-  bool p_bValueURLEncode,
-  bool &p_bFirstParam);
+	bool p_bValueURLEncode,
+	bool &p_bFirstParam);
 void IMSI2SemiOctet(
 	std::string &p_strIMSI,
 	std::string &p_strSemiOctet);
@@ -142,7 +142,7 @@ int main(int argc, char *argv[])
 	if (iFnRes) {
 		UTL_LOG_W(coLog, "parameter '%s' is not defined in configuration", pszParamName);
 	}
-  /* подключение к БД */
+	/* подключение к БД */
 	iFnRes = db_pool_init(&coLog, strDBUserName, strDBUserPswd, strDBDescr, 1);
 	if (iFnRes) {
 		iRetVal = -5;
@@ -190,7 +190,7 @@ int main(int argc, char *argv[])
 			otl_value<std::string> coIMSI;
 			otl_value<std::string> coProfile;
 			otl_value<std::string> coSettingsType;
-      std::string strHeader = "116111";
+			std::string strHeader = "116111";
 			std::string strText;
 			std::string strSec;
 			std::string strPin;
@@ -202,15 +202,15 @@ int main(int argc, char *argv[])
 				*pcoDBConn);
 			coDelete.open(1, "delete from ps.omaQueue where rowid = :row_id/*char[256]*/", *pcoDBConn);
 			while (!coQueue.eof()) {
-        strText.clear ();
+				strText.clear ();
 				coQueue
 					>> coRowId
 					>> coMSISDN
 					>> coIMSI
 					>> coProfile
 					>> coSettingsType;
-        UTL_LOG_N (coLog, "row selected: '%s'; '%s'; '%s'; '%s'", coMSISDN.v.c_str(), coIMSI.v.c_str(), coProfile.v.c_str(), coSettingsType.v.c_str());
-        if (coMSISDN.is_null ()) {
+				UTL_LOG_N (coLog, "row selected: '%s'; '%s'; '%s'; '%s'", coMSISDN.v.c_str(), coIMSI.v.c_str(), coProfile.v.c_str(), coSettingsType.v.c_str());
+				if (coMSISDN.is_null ()) {
 					UTL_LOG_E(coLog, "MSISDN not defined");
 					goto delete_and_continue;
 				} else {
@@ -234,8 +234,8 @@ int main(int argc, char *argv[])
 				} else if (0 == coProfile.v.compare("SIMPLE TEXT WND")) {
 					eProfile = m_eSimpleWnd;
 				} else if ( 0 == coProfile.v.compare( "HONOR" ) ) {
-          eProfile = m_eHonor;
-        } else {
+					eProfile = m_eHonor;
+				} else {
 					UTL_LOG_E(coLog, "unsupported profile: '%s'", coProfile.v.c_str());
 					goto delete_and_continue;;
 				}
@@ -251,7 +251,7 @@ int main(int argc, char *argv[])
 					goto delete_and_continue;;
 				}
 
-        /* отправляем первичное уведомление */
+				/* отправляем первичное уведомление */
 				switch (eSettingsType) {
 				case m_eInternet:
 					strText = g_pszNotiInet;
@@ -259,39 +259,39 @@ int main(int argc, char *argv[])
 				case m_eMMS:
 					strText = g_pszNotiMMS;
 					break;
-        case m_eInternetMMS:
+				case m_eInternetMMS:
 					strText = g_pszNotiInetMMS;
 					break;
 				}
 
 				switch (eProfile) {
-				  case m_eUserPin:
-          case m_eHonor:
-					  strSec = "userpin";
-					  strPin = "1234";
-					  strText += g_pszNotiOpt;
-					  break;
-				  case m_eNetwPin:
-					  strSec = "netwpin";
-					  IMSI2SemiOctet(coIMSI.v, strPin);
-					  break;
-				  case m_eSimpleText:
-          case m_eSimpleWnd:
-            /* для текстовых настроек уведомление не посылается */
-            strText.clear ();
-					  break;
+					case m_eUserPin:
+					case m_eHonor:
+						strSec = "userpin";
+						strPin = "1234";
+						strText += g_pszNotiOpt;
+						break;
+					case m_eNetwPin:
+						strSec = "netwpin";
+						IMSI2SemiOctet(coIMSI.v, strPin);
+						break;
+					case m_eSimpleText:
+					case m_eSimpleWnd:
+						/* для текстовых настроек уведомление не посылается */
+						strText.clear ();
+						break;
 				}
 
-        if (0 != strText.length()) {
-				  iFnRes = put_sms(coLog, strSMSBoxHost, strSMSBoxSMSURL, strSMSBoxUserName, strSMSBoxUserPswd, strHeader, coMSISDN.v, strText);
-				  UTL_LOG_N(coLog, "sms is sent with status '%d': '%s'; '%s'; '%s';", iFnRes, strHeader.c_str(), coMSISDN.v.c_str(), strText.c_str());
-          try {
-            coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
-          } catch (otl_exception &coExept) {
-            UTL_LOG_E (coLog, "code: '%d'; message: '%s'; query: '%s';", coExept.code, coExept.msg, coExept.stm_text);
-            coResult.clean();
-          }
-        }
+				if (0 != strText.length()) {
+					iFnRes = put_sms(coLog, strSMSBoxHost, strSMSBoxSMSURL, strSMSBoxUserName, strSMSBoxUserPswd, strHeader, coMSISDN.v, strText);
+					UTL_LOG_N(coLog, "sms is sent with status '%d': '%s'; '%s'; '%s';", iFnRes, strHeader.c_str(), coMSISDN.v.c_str(), strText.c_str());
+					try {
+						coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
+					} catch (otl_exception &coExept) {
+						UTL_LOG_E (coLog, "code: '%d'; message: '%s'; query: '%s';", coExept.code, coExept.msg, coExept.stm_text);
+						coResult.clean();
+					}
+				}
 
 				/* отправляем настройки INTERNET */
 				switch (eSettingsType) {
@@ -299,31 +299,31 @@ int main(int argc, char *argv[])
 				case m_eInternetMMS:
 					if (eProfile == m_eSimpleText) {
 						strText = g_pszTextInet;
-          } else if (eProfile == m_eSimpleWnd) {
-            strText = g_pszTextInetWnd;
-          } else if (eProfile == m_eHonor) {
-            strText = g_pszAPNInetHonor;
-          } else {
+					} else if (eProfile == m_eSimpleWnd) {
+						strText = g_pszTextInetWnd;
+					} else if (eProfile == m_eHonor) {
+						strText = g_pszAPNInetHonor;
+					} else {
 						strText = g_pszAPNInet;
-          }
+					}
 					break;
 				default:
-          strText.clear ();
+					strText.clear ();
 				}
 				if (0 != strText.length()) {
-          if (eProfile == m_eSimpleText || eProfile == m_eSimpleWnd) {
+					if (eProfile == m_eSimpleText || eProfile == m_eSimpleWnd) {
 						iFnRes = put_sms(coLog, strSMSBoxHost, strSMSBoxSMSURL, strSMSBoxUserName, strSMSBoxUserPswd, strHeader, coMSISDN.v, strText);
-          } else {
+					} else {
 						iFnRes = put_ota(coLog, strSMSBoxHost, strSMSBoxOTAURL, strSMSBoxUserName, strSMSBoxUserPswd, strHeader, coMSISDN.v, strText, strSec, strPin);
-          }
+					}
 					UTL_LOG_N(coLog, "sms is sent with status '%d': '%s'; '%s'; '%s';", iFnRes, strHeader.c_str(), coMSISDN.v.c_str(), strText.c_str());
-          try {
-            coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
-          } catch ( otl_exception &coExept ) {
-            UTL_LOG_E( coLog, "code: '%d'; message: '%s'; query: '%s';", coExept.code, coExept.msg, coExept.stm_text );
-            coResult.clean();
-          }
-        }
+					try {
+						coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
+					} catch ( otl_exception &coExept ) {
+						UTL_LOG_E( coLog, "code: '%d'; message: '%s'; query: '%s';", coExept.code, coExept.msg, coExept.stm_text );
+						coResult.clean();
+					}
+				}
 
 				/* отправялем настройки MMS */
 				switch (eSettingsType) {
@@ -331,52 +331,52 @@ int main(int argc, char *argv[])
 				case m_eInternetMMS:
 					if (eProfile == m_eSimpleText) {
 						strText = g_pszTextMMS;
-          } else if (eProfile == m_eSimpleWnd) {
+					} else if (eProfile == m_eSimpleWnd) {
 						strText = g_pszTextMMSWnd;
-          } else {
+					} else {
 						strText = g_pszAPNMMS;
-          }
+					}
 					break;
 				default:
-          strText.clear ();
-        }
+					strText.clear ();
+				}
 				if (0 != strText.length()) {
-          if (eProfile == m_eSimpleText || eProfile == m_eSimpleWnd)
+					if (eProfile == m_eSimpleText || eProfile == m_eSimpleWnd)
 						iFnRes = put_sms(coLog, strSMSBoxHost, strSMSBoxSMSURL, strSMSBoxUserName, strSMSBoxUserPswd, strHeader, coMSISDN.v, strText);
 					else
 						iFnRes = put_ota(coLog, strSMSBoxHost, strSMSBoxOTAURL, strSMSBoxUserName, strSMSBoxUserPswd, strHeader, coMSISDN.v, strText, strSec, strPin);
 					UTL_LOG_N(coLog, "sms is sent with status '%d': '%s'; '%s'; '%s';", iFnRes, strHeader.c_str(), coMSISDN.v.c_str(), strText.c_str());
-          try {
-  					coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
-          } catch (otl_exception &coExept) {
-            UTL_LOG_E (coLog, "code: '%d'; message: '%s'; query: '%s';", coExept.code, coExept.msg, coExept.stm_text);
-            coResult.clean();
-          }
+					try {
+						coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
+					} catch (otl_exception &coExept) {
+						UTL_LOG_E (coLog, "code: '%d'; message: '%s'; query: '%s';", coExept.code, coExept.msg, coExept.stm_text);
+						coResult.clean();
+					}
 				}
 
 				/* отправляем уведомление о доставленных настройках */
-        if (eProfile != m_eSimpleText && eProfile != m_eSimpleWnd) {
-          switch (eSettingsType) {
-          case m_eInternet:
-            strText = g_pszNotiPostInet;
-            break;
-          case m_eMMS:
-            strText = g_pszNotiPostMMS;
-            break;
-          case m_eInternetMMS:
-            strText = g_pszNotiPostInetMMS;
-            break;
-          }
+				if (eProfile != m_eSimpleText && eProfile != m_eSimpleWnd) {
+					switch (eSettingsType) {
+					case m_eInternet:
+						strText = g_pszNotiPostInet;
+						break;
+					case m_eMMS:
+						strText = g_pszNotiPostMMS;
+						break;
+					case m_eInternetMMS:
+						strText = g_pszNotiPostInetMMS;
+						break;
+					}
 					iFnRes = put_sms(coLog, strSMSBoxHost, strSMSBoxSMSURL, strSMSBoxUserName, strSMSBoxUserPswd, strHeader, coMSISDN.v, strText);
 					UTL_LOG_N(coLog, "sms is sent with status '%d': '%s'; '%s'; '%s';", iFnRes, strHeader.c_str(), coMSISDN.v.c_str(), strText.c_str());
-          try {
-            coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
-          } catch (otl_exception &coExept) {
-            UTL_LOG_E (coLog, "code: '%d'; message: '%s'; query: '%s';", coExept.code, coExept.msg, coExept.stm_text);
-            coResult.clean();
-          }
-        }
-        delete_and_continue:
+					try {
+						coResult << coMSISDN << strHeader << strText << strSec << strPin << iFnRes;
+					} catch (otl_exception &coExept) {
+						UTL_LOG_E (coLog, "code: '%d'; message: '%s'; query: '%s';", coExept.code, coExept.msg, coExept.stm_text);
+						coResult.clean();
+					}
+				}
+				delete_and_continue:
 				coDelete << coRowId;
 			}
 		} catch (otl_exception &coExept) {
@@ -687,7 +687,7 @@ void append_urlparam(
 	std::string &p_strParamSet,
 	const char *p_pszParamName,
 	std::string &p_strParamVal,
-  bool p_bValueURLEncode,
+	bool p_bValueURLEncode,
 	bool &p_bFirstParam)
 {
 	char *pszEncodedString;
@@ -706,15 +706,15 @@ void append_urlparam(
 		}
 	}
 	if (p_strParamVal.length()) {
-    if ( p_bValueURLEncode ) {
-      pszEncodedString = curl_easy_escape( pCurl, p_strParamVal.data(), p_strParamVal.length() );
-      if ( pszEncodedString ) {
-        p_strParamSet += pszEncodedString;
-        curl_free( pszEncodedString );
-      }
-    } else {
-      p_strParamSet += p_strParamVal;
-    }
+		if ( p_bValueURLEncode ) {
+			pszEncodedString = curl_easy_escape( pCurl, p_strParamVal.data(), p_strParamVal.length() );
+			if ( pszEncodedString ) {
+				p_strParamSet += pszEncodedString;
+				curl_free( pszEncodedString );
+			}
+		} else {
+			p_strParamSet += p_strParamVal;
+		}
 	}
 }
 
@@ -722,26 +722,26 @@ void IMSI2SemiOctet(
 	std::string &p_strIMSI,
 	std::string &p_strSemiOctet)
 {
-  if ( p_strIMSI.length() == 0 ) {
-    return;
-  }
+	if ( p_strIMSI.length() == 0 ) {
+		return;
+	}
 
-  p_strSemiOctet = '%';
+	p_strSemiOctet = '%';
 	p_strSemiOctet += p_strIMSI[0];
 
-  if( 0 != p_strIMSI.length() % 2 ) {
-    p_strSemiOctet += '9';
-  } else {
-    p_strSemiOctet += '8';
-  }
+	if( 0 != p_strIMSI.length() % 2 ) {
+		p_strSemiOctet += '9';
+	} else {
+		p_strSemiOctet += '8';
+	}
 
 	for (size_t i = 1; i < p_strIMSI.length(); ++i, ++i) {
-    p_strSemiOctet += '%';
-    if ( i + 1 < p_strIMSI.length() ) {
-      p_strSemiOctet += p_strIMSI[ i + 1 ];
-    } else {
-      p_strSemiOctet += 'F';
-    }
+		p_strSemiOctet += '%';
+		if ( i + 1 < p_strIMSI.length() ) {
+			p_strSemiOctet += p_strIMSI[ i + 1 ];
+		} else {
+			p_strSemiOctet += 'F';
+		}
 		p_strSemiOctet += p_strIMSI[i];
 	}
 }
