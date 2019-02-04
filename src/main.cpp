@@ -1,12 +1,13 @@
 #ifdef WIN32
 #	include <Windows.h>
 #endif
-#include "utils/config/config.h"
-#include "utils/dbpool/dbpool.h"
-#include "utils/log/log.h"
 #include <curl/curl.h>
 #include <iconv.h>
 #include <errno.h>
+
+#include "utils/config/config.h"
+#include "utils/dbpool/dbpool.h"
+#include "utils/log/log.h"
 
 enum ESettingsType {
 	m_eInternet = 1,
@@ -18,8 +19,8 @@ enum EProfile {
 	m_eUserPin = 1,
 	m_eNetwPin = 2,
 	m_eSimpleText = 3,
-  m_eSimpleWnd = 4,
-  m_eHonor = 5
+	m_eSimpleWnd = 4,
+	m_eHonor = 5
 };
 
 const char *g_pszNotiInet     = "Автоматические настройки мобильного интернета будут доставлены следующим конфигурационным SMS";
